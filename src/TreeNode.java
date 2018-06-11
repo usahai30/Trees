@@ -26,21 +26,40 @@ public class TreeNode<E> {
 		return this.right;
 	}
 
+	public void deleteLeft()
+	{
+		this.left = null;
+	}
+	
+	public void deleteRight()
+	{
+		this.right = null;
+	}
+	
 	public void visit() {
-		System.out.println(this.data);
+		System.out.print(this.data+" ");
 	}
 
 	public TreeNode<E> getLeftChild() {
 		return this.left;
 	}
 
-	public TreeNode<E> getRightchild() {
+	public TreeNode<E> getRightChild() {
 		return this.right;
+	}
+	
+	public void setData(E val)
+	{
+		this.data = val;
 	}
 	
 	public E getData()
 	{
 		return this.data;
+	}
+
+	public void delete() {
+		this.data = null;
 	}
 	
 	/*

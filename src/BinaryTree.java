@@ -20,12 +20,12 @@ public class BinaryTree<E extends Comparable<? super E>> {
 		int comp = val.compareTo(curr.getData());		
 		
 		while((comp<0 && curr.getLeftChild()!=null) ||
-				(comp>0 && curr.getRightchild()!=null)) 
+				(comp>0 && curr.getRightChild()!=null)) 
 		{			
 			if(comp < 0)
 				curr = curr.getLeftChild();
 			else if(comp > 0)
-				curr = curr.getRightchild();
+				curr = curr.getRightChild();
 			
 			comp = val.compareTo(curr.getData());	
 		}
@@ -47,7 +47,7 @@ public class BinaryTree<E extends Comparable<? super E>> {
 		{
 			node.visit();
 			preOrder(node.getLeftChild());
-			preOrder(node.getRightchild());
+			preOrder(node.getRightChild());
 		}
 	}
 	
@@ -66,7 +66,7 @@ public class BinaryTree<E extends Comparable<? super E>> {
 			{
 				curr.visit();
 				q.add(curr.getLeftChild());
-				q.add(curr.getRightchild());
+				q.add(curr.getRightChild());
 			}
 		}
 	}
@@ -84,12 +84,74 @@ public class BinaryTree<E extends Comparable<? super E>> {
 			if(comp < 0)
 				curr = curr.getLeftChild();
 			else if(comp > 0)
-				curr = curr.getRightchild();
+				curr = curr.getRightChild();
 			else 
 				return true;
 		}
 		
 		return found;
+	}
+	
+	public void delete(E val)
+	{
+		TreeNode<E> curr = root;		
+		TreeNode<E> prev = curr;
+		int comp;		
+		
+		while(curr!=null) {
+			comp = val.compareTo(curr.getData());
+			
+			if(comp < 0)
+			{
+				prev = curr;
+				curr = curr.getLeftChild();
+			}
+			else if(comp > 0)
+			{
+				prev = curr;
+				curr = curr.getRightChild();
+			}
+			else
+				break;
+		}
+		
+		if(curr.getLeftChild()==null)
+		{
+			if(curr.getRightChild() == null)
+			{
+				if(prev==curr)
+				{
+					curr.delete();
+				}else {
+				
+					comp = curr.getData().compareTo(prev.getData());
+					if(comp<0)
+						prev.deleteLeft();				
+					else
+						prev.deleteRight();
+				}
+			}else
+			{
+				curr.setData(curr.getRightChild().getData());
+				curr.deleteRight();
+			}
+		}else if(curr.getRightChild() == null)
+		{
+			curr.setData(curr.getLeftChild().getData());
+			curr.deleteLeft();
+		}else
+		{
+			TreeNode<E> smallest = curr.getRightChild();
+			
+			while(smallest.getLeftChild()!=null)
+			{
+				smallest=smallest.getLeftChild();
+			}
+			E temp = smallest.getData();
+			delete(temp);
+			curr.setData(temp);
+			
+		}		
 	}
 	
 	public static void main(String args[])
@@ -101,10 +163,34 @@ public class BinaryTree<E extends Comparable<? super E>> {
 		btree.insert(12);
 		btree.insert(30);
 		btree.insert(25);
+		btree.insert(35);
 		
-		//btree.preOrder();
-		
-		System.out.println(btree.contains(15));
+		btree.levelOrder();
+		btree.delete(10);
+		System.out.println("\n");
+		btree.levelOrder();
+		btree.delete(12);
+		System.out.println("\n");
+		btree.levelOrder();
+		btree.delete(30);
+		System.out.println("\n");
+		btree.levelOrder();
+		btree.delete(15);
+		System.out.println("\n");
+		btree.levelOrder();
+		btree.delete(20);
+		System.out.println("\n");
+		btree.levelOrder();
+		btree.delete(25);
+		System.out.println("\n");
+		btree.levelOrder();
+		btree.delete(35);
+		System.out.println("\n");
+		btree.levelOrder();
+		btree.delete(5);
+		System.out.println("\n");
+		btree.levelOrder();
+		//System.out.println(btree.contains(15));
 		
 	}
 }
