@@ -6,6 +6,7 @@ public class TreeNode<E> {
 	private TreeNode<E> left;
 	private TreeNode<E> right;
 	
+	
 	public TreeNode(E val, TreeNode<E> node) {
 		this.data = val;
 		this.parent = node;
@@ -26,17 +27,36 @@ public class TreeNode<E> {
 	}
 
 	public void visit() {
-		// TODO Auto-generated method stub
-		
+		System.out.println(this.data);
 	}
 
 	public TreeNode<E> getLeftChild() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.left;
 	}
 
 	public TreeNode<E> getRightchild() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.right;
 	}
+	
+	public E getData()
+	{
+		return this.data;
+	}
+	
+	/*
+	public static void main(String args[])
+	{
+		TreeNode<Integer> node = new TreeNode<Integer>(1);
+		node.addLeft(2).addLeft(4);
+		node.addRight(3);
+		
+		TreeNode<Integer> temp = node;
+		while(temp.getLeftChild()!=null)
+		{
+			System.out.println(temp.data);
+			temp = temp.getLeftChild();
+		}
+		System.out.println(temp.data);
+	}
+	*/
 }
