@@ -154,43 +154,48 @@ public class BinaryTree<E extends Comparable<? super E>> {
 		}		
 	}
 	
+	public TreeNode<E> getNodeDetails(E find)
+	{
+		boolean found=false;
+		TreeNode<E> curr = root;
+		int comp;
+		
+		
+		while(curr!=null) {
+			comp = find.compareTo(curr.getData());
+			
+			if(comp < 0)
+				curr = curr.getLeftChild();
+			else if(comp > 0)
+				curr = curr.getRightChild();
+			else 
+			{
+				found=true;break;
+			}				
+		}
+		
+		if(found==true)
+			return curr;
+		else
+			return null;
+		
+	}
+	
 	public static void main(String args[])
 	{
-		BinaryTree<Integer> btree = new BinaryTree<Integer>(20);		
-		btree.insert(10);
-		btree.insert(5);
-		btree.insert(15);
-		btree.insert(12);
-		btree.insert(30);
-		btree.insert(25);
-		btree.insert(35);
+		BinaryTree<String> btree = new BinaryTree<String>("east");		
+		btree.insert("at");
+		btree.insert("eat");
+		btree.insert("am");
+		btree.insert("ate");
+		btree.insert("ear");
 		
-		btree.levelOrder();
-		btree.delete(10);
-		System.out.println("\n");
-		btree.levelOrder();
-		btree.delete(12);
-		System.out.println("\n");
-		btree.levelOrder();
-		btree.delete(30);
-		System.out.println("\n");
-		btree.levelOrder();
-		btree.delete(15);
-		System.out.println("\n");
-		btree.levelOrder();
-		btree.delete(20);
-		System.out.println("\n");
-		btree.levelOrder();
-		btree.delete(25);
-		System.out.println("\n");
-		btree.levelOrder();
-		btree.delete(35);
-		System.out.println("\n");
-		btree.levelOrder();
-		btree.delete(5);
-		System.out.println("\n");
-		btree.levelOrder();
-		//System.out.println(btree.contains(15));
+		btree.preOrder();
+		System.out.println();
+		
+		TreeNode<String> node = btree.getNodeDetails("at");
+		System.out.println(node.toString());
+		
 		
 	}
 }

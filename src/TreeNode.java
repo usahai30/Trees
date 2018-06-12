@@ -9,7 +9,7 @@ public class TreeNode<E> {
 	
 	public TreeNode(E val, TreeNode<E> node) {
 		this.data = val;
-		this.parent = node;
+		this.setParent(node);
 		this.left = null;
 		this.right = null;
 	}
@@ -35,7 +35,6 @@ public class TreeNode<E> {
 	{
 		this.right = null;
 	}
-	
 	public void visit() {
 		System.out.print(this.data+" ");
 	}
@@ -60,6 +59,40 @@ public class TreeNode<E> {
 
 	public void delete() {
 		this.data = null;
+	}
+
+	public TreeNode<E> getParent() {
+		return parent;
+	}
+
+	public void setParent(TreeNode<E> parent) {
+		this.parent = parent;
+	}
+	
+	public String toString()
+	{
+		E temp;
+		String parent,left,right;
+		
+		if(this.getParent()==null)
+			parent = "";
+		else
+			parent = this.getParent().getData().toString();
+		
+		if(this.getLeftChild()==null)
+			left = "";
+		else
+			left = this.getLeftChild().getData().toString();
+			
+		if(this.getRightChild()==null)
+			right = "";
+		else
+			right = this.getRightChild().getData().toString();
+		
+		
+		return "Parent: "+parent+"\n"+
+				"Left: "+left+"\n"+
+				"Right: "+right+"\n";
 	}
 	
 	/*
