@@ -33,3 +33,23 @@ BinaryTree<Integer> btree = new BinaryTree<Integer>(20);
 		System.out.println("\n");
 		btree.levelOrder();
 		//System.out.println(btree.contains(15));
+		
+		
+		
+		
+		
+		
+		
+		
+BinaryTree<String> btree = new BinaryTree<String>("east");		
+		btree.insert("at");
+		btree.insert("eat");
+		btree.insert("am");
+		btree.insert("ate");
+		btree.insert("ear");
+		
+		btree.preOrder();
+		System.out.println();
+		
+		TreeNode<String> node = btree.getNodeDetails("at");
+		System.out.println(node.toString());
