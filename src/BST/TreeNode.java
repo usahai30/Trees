@@ -7,6 +7,13 @@ public class TreeNode<E> {
 	private TreeNode<E> left;
 	private TreeNode<E> right;
 	
+	public TreeNode()
+	{
+		this.data = null;
+		this.left = null;
+		this.right = null;
+		this.setParent(null);
+	}
 	
 	public TreeNode(E val, TreeNode<E> node) {
 		this.data = val;
@@ -21,9 +28,21 @@ public class TreeNode<E> {
 		return this.left;
 	}
 	
+	public TreeNode<E> setLeft(TreeNode<E> node)
+	{
+		this.left = node;
+		return this.left;
+	}
+	
 	public TreeNode<E> addRight(E val)
 	{
 		this.right = new TreeNode<E>(val,this);
+		return this.right;
+	}
+	
+	public TreeNode<E> setRight(TreeNode<E> node)
+	{
+		this.right = node;
 		return this.right;
 	}
 
@@ -36,6 +55,7 @@ public class TreeNode<E> {
 	{
 		this.right = null;
 	}
+	
 	public void visit() {
 		System.out.print(this.data+" ");
 	}
@@ -60,19 +80,21 @@ public class TreeNode<E> {
 
 	public void delete() {
 		this.data = null;
+		this.parent = null;
+		this.left = null;
+		this.right = null;
 	}
 
 	public TreeNode<E> getParent() {
 		return parent;
 	}
-
+	
 	public void setParent(TreeNode<E> parent) {
 		this.parent = parent;
 	}
 	
 	public String toString()
 	{
-		E temp;
 		String parent,left,right;
 		
 		if(this.getParent()==null)
@@ -91,25 +113,9 @@ public class TreeNode<E> {
 			right = this.getRightChild().getData().toString();
 		
 		
-		return "Parent: "+parent+"\n"+
+		return "Data: "+this.data+"\n"+
+				"Parent: "+parent+"\n"+
 				"Left: "+left+"\n"+
 				"Right: "+right+"\n";
 	}
-	
-	/*
-	public static void main(String args[])
-	{
-		TreeNode<Integer> node = new TreeNode<Integer>(1);
-		node.addLeft(2).addLeft(4);
-		node.addRight(3);
-		
-		TreeNode<Integer> temp = node;
-		while(temp.getLeftChild()!=null)
-		{
-			System.out.println(temp.data);
-			temp = temp.getLeftChild();
-		}
-		System.out.println(temp.data);
-	}
-	*/
 }

@@ -1,27 +1,33 @@
 package BST;
 
-public class BinaryTree<E extends Comparable<? super E>> extends Tree<E> {
+public class BalancedBinaryTree<E extends Comparable<? super E>> extends Tree<E> {
 	
-	public BinaryTree()
+	public int rightShift;
+	public int leftShift;
+	
+	public BalancedBinaryTree()
 	{
 		super();
+		leftShift=0;
+		rightShift=0;
 	}
 	
-	public BinaryTree(E val)
+	public BalancedBinaryTree(E val)
 	{
 		super(val);
-	}	
+		leftShift=0;
+		rightShift=0;
+	}
 	
 	public boolean insert(E val)
 	{
-		
-		if(getRoot()==null) {
-			setRoot(val);
-			incSize();
+		if(this.getRoot()==null) {
+			this.setRoot(val);
+			this.incSize();
 			return true;
 		}
-			
-		TreeNode<E> curr = getRoot();
+		
+		TreeNode<E> curr = this.getRoot();
 		int comp = val.compareTo(curr.getData());		
 		
 		while((comp<0 && curr.getLeftChild()!=null) ||
@@ -37,13 +43,19 @@ public class BinaryTree<E extends Comparable<? super E>> extends Tree<E> {
 		
 		if(comp<0)
 		{
-			curr.addLeft(val);
-			incSize();
+			TreeNode<E> temp = curr.addLeft(val);
+			this.incSize();
+			
+			if(!isBalanced(temp.getParent().getParent()))
+				rightShift(temp.getParent());			
 		}
 		else if(comp>0)
 		{
-			curr.addRight(val);
-			incSize();
+			TreeNode<E> temp = curr.addRight(val);
+			this.incSize();
+			
+			if(!isBalanced(temp.getParent().getParent()))
+				leftShift(temp.getParent());
 		}
 		else
 			return false;
@@ -52,9 +64,44 @@ public class BinaryTree<E extends Comparable<? super E>> extends Tree<E> {
 			
 	}
 	
+	private void leftShift(TreeNode<E> node) {
+		TreeNode<E> parent = node.getParent();
+		
+		if(parent==this.getRoot())
+		{
+			node.setParent(null);
+			this.setRoot(node); 
+		}else {
+			parent.getParent().setRight(node);
+			node.setParent(parent.getParent());
+		}	
+		parent.deleteLeft();
+		parent.deleteRight();
+		node.setLeft(parent);
+		
+		leftShift++;
+	}
+
+	private void rightShift(TreeNode<E> node) {
+		TreeNode<E> parent = node.getParent();
+		
+		if(parent==this.getRoot())
+		{
+			node.setParent(null);
+			this.setRoot(node);
+		}else {
+			parent.getParent().setLeft(node);
+			node.setParent(parent.getParent());
+		}
+		parent.deleteLeft();
+		parent.deleteRight();
+		node.setRight(parent);	
+		rightShift++;
+	}	
+	
 	public void delete(E val)
 	{
-		TreeNode<E> curr = getRoot();		
+		TreeNode<E> curr = this.getRoot();		
 		TreeNode<E> prev = curr;
 		int comp;		
 		
@@ -106,7 +153,7 @@ public class BinaryTree<E extends Comparable<? super E>> extends Tree<E> {
 	
 	public static void main(String args[])
 	{
-		BinaryTree<Integer> btree = new BinaryTree<Integer>();	
+		BalancedBinaryTree<Integer> btree = new BalancedBinaryTree<Integer>();	
 		btree.insert(20);
 		btree.insert(10);
 		btree.insert(30);
@@ -118,8 +165,12 @@ public class BinaryTree<E extends Comparable<? super E>> extends Tree<E> {
 		btree.insert(1);
 		
 		btree.levelOrder();
-		System.out.println("\nNodes - "+btree.getSize()+" | Height - "+btree.height(btree.getRoot()));
+		//System.out.println("\nRoot Node -"+btree.getRoot());
+		System.out.println("\nSize - "+btree.getSize()+" | Height - "+btree.height(btree.getRoot()));
+		System.out.println("Left Shift - "+btree.leftShift+" | Right Shift - "+btree.rightShift);
 		System.out.println("Balanced - "+btree.isBalanced(btree.getRoot()));
 		System.out.println("**********************************************");
+		
+		
 	}
 }
